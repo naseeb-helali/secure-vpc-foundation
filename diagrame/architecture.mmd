@@ -1,4 +1,3 @@
-```mermaid
 flowchart LR
   subgraph Public_Subnet
     IGW[Internet Gateway];
@@ -21,7 +20,6 @@ flowchart LR
   AppEC2 --> GWEP --> S3;
 
   classDef egress stroke-dasharray:3 3;
-```
 
   %% ملاحظات تصميم:
   %% - NAT Instance في Public Subnet + تعطيل Source/Dest Check
