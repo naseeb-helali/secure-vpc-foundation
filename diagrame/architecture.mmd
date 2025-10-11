@@ -3,25 +3,38 @@ flowchart LR
     IGW[Internet Gateway]
     Bastion[Bastion Host - EIP]
     NATi[NAT Instance]
+    RTpub[Public Route Table]
   end
 
   subgraph Private_Subnet
     AppEC2[EC2 - Private]
+    RTpriv[Private Route Table]
   end
 
   S3[(S3 Bucket)]
-  RTpub[Public Route Table]
-  RTpriv[Private Route Table]
   GWEP[S3 Gateway Endpoint]
 
+  %% اتصال الإنترنت للموارد العامة
+  RTpub --> IGW
   IGW --- Bastion
   IGW --- NATi
+
+  %% مسار الإدارة الآمن داخل الـVPC
+  Bastion --> AppEC2:::ssh
+
+  %% خروج الخاص للإنترنت عبر NAT Instance
+  RTpriv -. 0.0.0.0/0 .-> NATi
   AppEC2 --> NATi:::egress
+
+  %% وصول S3 داخلي عبر Gateway Endpoint
+  RTpriv --> GWEP
   AppEC2 --> GWEP --> S3
 
-  classDef egress stroke-dasharray:3 3
+  classDef egress stroke-dasharray:3 3;
+  classDef ssh stroke-dasharray:3 3,stroke:#0a0,stroke-width:2px;
 
   %% ملاحظات تصميم:
   %% - NAT Instance في Public Subnet + تعطيل Source/Dest Check
-  %% - Bastion في Public Subnet + تقييد وصول SSH
-  %% - S3 Gateway Endpoint للوصول الداخلي
+  %% - Bastion في Public Subnet + تقييد وصول SSH (Least Privilege)
+  %% - Private RT يوجّه 0.0.0.0/0 نحو واجهة NAT Instance
+  %% - S3 Gateway Endpoint مرتبط بـPrivate RT للوصول الداخلي
