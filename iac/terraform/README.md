@@ -4,7 +4,7 @@
 This project builds a secure and cost-efficient AWS VPC architecture using Terraform.  
 It demonstrates essential network design principles—segmentation, controlled connectivity, and observability—implemented entirely with Free-Tier resources.
 
-The design is based on best practices covered in *AWS VPC Deep Dive (DolfinED)* and serves as a foundation layer for future DevOps automation and CI/CD integration.
+The design is based on best practices covered in *AWS* and serves as a foundation layer for future DevOps automation and CI/CD integration.
 
 ---
 
