@@ -1,21 +1,6 @@
-```mermaid
 flowchart LR
   subgraph Public_Subnet
     IGW[Internet Gateway]
     Bastion[Bastion Host (EIP)]
     NATi[NAT Instance]
   end
-  subgraph Private_Subnet
-    AppEC2[EC2 (Private)]
-  end
-  S3[(S3)]
-  RTpub[Public Route Table]
-  RTpriv[Private Route Table]
-  GWEP[S3 Gateway Endpoint]
-
-  IGW <---> Bastion
-  IGW <---> NATi
-  AppEC2 --> NATi:::egress
-  AppEC2 --> GWEP --> S3
-
-  classDef egress stroke-dasharray: 3 3;```
