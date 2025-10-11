@@ -21,9 +21,9 @@ flowchart LR
   AppEC2 --> GWEP --> S3;
 
   classDef egress stroke-dasharray:3 3;
-  ```
+```
 
-%% ملاحظات تصميم:
-%% - NAT Instance في Public Subnet + تعطيل Source/Dest Check
-%% - Bastion في Public Subnet + تقييد وصول SSH
-%% - S3 Gateway Endpoint للوصول الداخلي
+  %% ملاحظات تصميم:
+  %% - NAT Instance في Public Subnet + تعطيل Source/Dest Check
+  %% - Bastion في Public Subnet + تقييد وصول SSH
+  %% - S3 Gateway Endpoint للوصول الداخلي
