@@ -14,27 +14,24 @@ flowchart LR
   S3[(S3 Bucket)]
   GWEP[S3 Gateway Endpoint]
 
-  %% اتصال الإنترنت للموارد العامة
+  %% Internet for public resources
   RTpub --> IGW
   IGW --- Bastion
   IGW --- NATi
 
-  %% مسار الإدارة الآمن داخل الـVPC
-  Bastion --> AppEC2:::ssh
+  %% Secure admin path inside VPC
+  Bastion -. SSH .-> AppEC2
 
-  %% خروج الخاص للإنترنت عبر NAT Instance
-  RTpriv -. 0.0.0.0/0 .-> NATi
-  AppEC2 --> NATi:::egress
+  %% Private egress via NAT Instance
+  RTpriv -. "0.0.0.0/0" .-> NATi
+  AppEC2 -. egress .-> NATi
 
-  %% وصول S3 داخلي عبر Gateway Endpoint
+  %% Private S3 access via Gateway Endpoint
   RTpriv --> GWEP
   AppEC2 --> GWEP --> S3
 
-  classDef egress stroke-dasharray:3 3;
-  classDef ssh stroke-dasharray:3 3,stroke:#0a0,stroke-width:2px;
-
-  %% ملاحظات تصميم:
-  %% - NAT Instance في Public Subnet + تعطيل Source/Dest Check
-  %% - Bastion في Public Subnet + تقييد وصول SSH (Least Privilege)
-  %% - Private RT يوجّه 0.0.0.0/0 نحو واجهة NAT Instance
-  %% - S3 Gateway Endpoint مرتبط بـPrivate RT للوصول الداخلي
+  %% Design notes:
+  %% - NAT Instance in Public Subnet + disable Source/Dest Check
+  %% - Bastion in Public Subnet + restrict SSH (Least Privilege)
+  %% - Private RT sends 0.0.0.0/0 to the NAT Instance interface
+  %% - S3 Gateway Endpoint attached to Private RT for internal access
