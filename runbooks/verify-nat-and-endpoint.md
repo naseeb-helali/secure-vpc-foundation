@@ -1,25 +1,33 @@
 <!--
-Rationale:
-- Ensures private instances can reach the internet via NAT instance.
-- Validates S3 access through Gateway Endpoint (no internet exposure).
+Purpose:
+- This runbook verifies that the NAT instance provides internet egress for private EC2 instances,
+  and that the S3 Gateway Endpoint enables private S3 access without traversing the public internet.
+- Scope: Secure VPC Foundation (Phase 1)
 -->
+
 # Runbook: Verify NAT Instance & S3 Gateway Endpoint
 
 ## Purpose
-Validate that private instances:
-- Egress to the internet via the NAT instance.
-- Access S3 through the Gateway Endpoint (no internet path).
+Validate that:
+- Private EC2 instances can access the internet **via NAT instance** (not directly).  
+- S3 operations from private EC2 instances are routed **through the Gateway Endpoint**, not over the internet.  
+
+---
 
 ## Prerequisites
-<!-- NAT and Endpoint must exist before running these checks -->
-- Terraform apply completed.
-- NAT instance created in the public subnet with source/dest check disabled.
-- S3 Gateway Endpoint attached to the private route table.
-- Instance profile on private EC2 with S3 read permissions for testing.
+<!-- Confirm environment readiness before running validation -->
+- Terraform apply has completed successfully.  
+- NAT instance deployed in the public subnet with `source_dest_check = false`.  
+- S3 Gateway Endpoint created and attached to the **private route table**.  
+- IAM instance profile with S3 read access attached to the private EC2.  
+- Bastion Host available for SSH jump access.  
 
-## Procedure
-1) Confirm default route via NAT instance (on private EC2)
+---
+
+## Step 1 — Confirm Private Route Table Configuration
+SSH into the private EC2 (via bastion) and check the routing table:
 ```bash
+ip route```bash
 ip route
 ```
 
