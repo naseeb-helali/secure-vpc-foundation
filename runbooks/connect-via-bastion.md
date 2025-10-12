@@ -70,7 +70,6 @@ Timeout on private EC2 SSH	Security group rule missing	Allow inbound SSH from ba
 Bastion unreachable	Wrong public IP or SG rule	Check Terraform outputs and AWS console
 “Agent refused operation”	SSH agent not running locally	Start SSH agent: eval "$(ssh-agent -s)" and add key
 
-
 ---
 
 # Verification
@@ -91,10 +90,3 @@ Notes
 This is a minimal, Free-Tier-friendly configuration using a bastion host instead of Session Manager.
 In Phase 2 (DevOps), consider migrating to AWS SSM Session Manager for fully keyless, auditable access.
 ---
-
-## Steps
-
-### 1. Connect to Bastion Host
-From your local terminal:
-```bash
-ssh -i ~/.ssh/<KEY>.pem ec2-user@<BASTION_PUBLIC_IP>
