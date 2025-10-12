@@ -14,7 +14,7 @@ Confirm delivery of VPC Flow Logs to S3 and diagnose missing records.
 2) Download and inspect a sample
 ```bash
 aws s3 cp s3://<FLOWLOGS_BUCKET>/<PATH>/<FILE>.gz .
-zcat <FILE>.gz | head -20
+zcat <FILE>.gz | head -20```
 
 <!--
 Key fields:
