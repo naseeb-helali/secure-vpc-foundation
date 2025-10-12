@@ -26,10 +26,10 @@ Validate that:
 
 ## Step 1 — Confirm Private Route Table Configuration
 SSH into the private EC2 (via bastion) and check the routing table:
-```bash
+bash
 ip route
 
-✅ Expected result:
+Expected result:
 The default route (0.0.0.0/0) should point to the NAT instance’s network interface (ENI ID).
 Example output:
 
@@ -38,13 +38,13 @@ default via 10.0.1.10 dev eth0
 
 ---
 
-Step 2 — Test Internet Egress (via NAT Instance)
+## Step 2 — Test Internet Egress (via NAT Instance)
 
 From the private EC2:
 
 curl -I https://example.com
 
-✅ Expected result:
+Expected result:
 You receive an HTTP response (200, 301, or 302).
 
 > If the request fails:
@@ -61,14 +61,14 @@ Confirm NAT instance SG allows outbound traffic (0.0.0.0/0).
 
 ---
 
-Step 3 — Validate S3 Gateway Endpoint Access
+## Step 3 — Validate S3 Gateway Endpoint Access
 
 Still on the private EC2:
 
 aws sts get-caller-identity
 aws s3 ls
 
-✅ Expected result:
+Expected result:
 The commands succeed — even with the NAT instance stopped (proof that traffic uses the Gateway Endpoint).
 
 > If aws s3 ls fails:
@@ -85,13 +85,13 @@ Confirm DNS resolution is enabled in the VPC.
 
 ---
 
-Step 4 — Confirm No Internet Path to S3
+## Step 4 — Confirm No Internet Path to S3
 
 To ensure requests are internal, run:
 
 traceroute s3.amazonaws.com
 
-✅ Expected result:
+Expected result:
 Traffic stays within private IP space (no hops to public internet).
 
 If you see public IP hops, verify that:
@@ -104,7 +104,7 @@ NAT instance is not being used for S3 (Gateway endpoint should bypass it).
 
 ---
 
-Step 5 — Troubleshooting Summary
+## Step 5 — Troubleshooting Summary
 
 Symptom	Likely Cause	Resolution
 
@@ -116,33 +116,3 @@ Timeout on SSH	Bastion or private SG rule issue	Allow SSH from bastion SG to pri
 - Bastion Host available for SSH jump access.  
 
 ---
-
-## Step 1 — Confirm Private Route Table Configuration
-SSH into the private EC2 (via bastion) and check the routing table:
-```bash
-ip route```bash
-ip route
-```
-
-<!--
-Expected:
-default points to the NAT instance ENI.
-Test internet egress (on private EC2)
-curl -I https://example.com
-
-Expected:
-HTTP 200/301/302.
-Test S3 access via Gateway Endpoint (on private EC2)
-aws sts get-caller-identity
-aws s3 ls
-
-Expected:
-S3 operations succeed without traversing the internet/NAT.
-
-Troubleshooting: 
-curl fails → verify NAT instance source_dest_check=false; check private route table default route.
-
-aws s3 ls fails → confirm endpoint is attached to private route table; verify instance IAM policy.
-
-SSH path → ensure access to private EC2 only through bastion.
--->
