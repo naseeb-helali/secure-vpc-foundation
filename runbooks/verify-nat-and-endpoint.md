@@ -111,8 +111,30 @@ Symptom	Likely Cause	Resolution
 curl fails	NAT instance misconfigured or SG blocked	Disable source_dest_check, verify routes
 aws s3 ls fails	Missing endpoint route or IAM permissions	Check S3 endpoint and instance role
 S3 requests exit via NAT	Missing endpoint in private route table	Re-attach endpoint to correct route table
-Timeout on SSH	Bastion or private SG rule issue	Allow SSH from bastion SG to private EC2 SG- S3 Gateway Endpoint created and attached to the **private route table**.  
-- IAM instance profile with S3 read access attached to the private EC2.  
-- Bastion Host available for SSH jump access.  
+Timeout on SSH	Bastion or private SG rule issue	Allow SSH from bastion SG to private EC2 SG
+
+
 
 ---
+
+## Verification Checklist
+
+Check	Expected Result
+
+Private route table default route → NAT instance ENI. 
+curl -I https://example.com from private EC2 succeeds. 
+aws s3 ls works with NAT stopped. 
+S3 Gateway Endpoint attached to private RT. 
+No public internet hops in traceroute to S3.
+
+
+
+---
+
+## Notes
+
+Always keep NAT instance small (t3.micro) and stop it when idle to control costs.
+
+In Phase 2, replace NAT instance with NAT Gateway for higher availability.
+
+Keep S3 Gateway Endpoint for cost-efficiency — it’s free and improves security.
