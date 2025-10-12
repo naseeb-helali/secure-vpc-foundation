@@ -1,32 +1,31 @@
 <!--
-Rationale:
-- Used to confirm Flow Logs delivery and analyze dropped/allowed traffic.
+Purpose:
+- This runbook describes how to verify and troubleshoot VPC Flow Logs.
+- Focus: S3 delivery validation and record-level inspection.
+- Applies to the Secure VPC Foundation (Phase 1) project.
 -->
+
 # Runbook: VPC Flow Logs Troubleshooting
 
 ## Purpose
-Confirm delivery of VPC Flow Logs to S3 and diagnose missing records.
+Verify that **VPC Flow Logs** are being delivered correctly to the designated S3 bucket  
+and help diagnose missing or unexpected records.
 
-## Checks
-1) Verify S3 delivery  
-   Locate the Flow Logs bucket (Terraform output) and confirm recent `.gz` log objects.
+---
 
-2) Download and inspect a sample
+## Prerequisites
+<!-- Ensure the following before starting -->
+- Terraform apply has completed successfully.
+- S3 bucket for Flow Logs was created (see Terraform output).
+- IAM role for Flow Logs has S3 write permissions.
+- VPC Flow Logs resource exists and points to the correct VPC.
+
+---
+
+## Step 1 — Verify S3 Delivery
+List recent objects in the S3 Flow Logs bucket:
 ```bash
-aws s3 cp s3://<FLOWLOGS_BUCKET>/<PATH>/<FILE>.gz .
-zcat <FILE>.gz | head -20
-```
-
-<!--
-Key fields:
-
-srcaddr, dstaddr, srcport, dstport, protocol
-action (ACCEPT|REJECT)
-log-status (OK|NODATA|SKIPDATA)
-
-Common Issues: 
-No objects → check IAM policy for s3:PutObject; verify correct VPC target.
-
+aws s3 ls s3://<FLOWLOGS_BUCKET> --recursive --human-readable --summarize
 Only ACCEPT or only REJECT → review SG/NACL rules; generate more traffic.
 Empty/old logs → ensure active traffic; wait a few minutes for delivery.
 
