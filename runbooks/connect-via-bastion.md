@@ -27,7 +27,7 @@ Securely access private EC2 instances that do not have public IPs, by routing SS
 From your local terminal:
 ```bash
 ssh -i ~/.ssh/<KEY>.pem ec2-user@<BASTION_PUBLIC_IP>
-
+```
 > Replace <KEY>.pem with your SSH key filename and <BASTION_PUBLIC_IP> with the public IP from Terraform output.
 
 
@@ -35,7 +35,7 @@ ssh -i ~/.ssh/<KEY>.pem ec2-user@<BASTION_PUBLIC_IP>
 
 ---
 
-2. Connect from Bastion to Private Instance
+# Connect from Bastion to Private Instance
 
 Once logged into the bastion, connect to the private instance:
 
@@ -44,23 +44,16 @@ ssh ec2-user@<PRIVATE_INSTANCE_IP>
 
 ---
 
-3. (Optional) Enable SSH Agent Forwarding
+# (Optional) Enable SSH Agent Forwarding
 
 To avoid copying private keys into the bastion host, use agent forwarding:
 
 ssh -A -i ~/.ssh/<KEY>.pem ec2-user@<BASTION_PUBLIC_IP>
 ssh ec2-user@<PRIVATE_INSTANCE_IP>
 
-> This forwards your local key to the bastion session, maintaining security hygiene.
+# Security Notes
 
-
-
-
----
-
-Security Notes
-
-<!-- Practical hardening recommendations -->Disable password authentication on the bastion; allow key-based SSH only.
+Disable password authentication on the bastion; allow key-based SSH only.
 
 Restrict bastion inbound SSH to specific admin IPs (your home/office CIDR).
 
@@ -68,11 +61,7 @@ Ensure private EC2 instances have no public IPs.
 
 Regularly rotate SSH keys and audit connection logs.
 
-
-
----
-
-Troubleshooting
+# Troubleshooting
 
 Issue	Possible Cause	Resolution
 
@@ -85,7 +74,7 @@ Bastion unreachable	Wrong public IP or SG rule	Check Terraform outputs and AWS c
 
 ---
 
-Verification
+# Verification
 
 From the private EC2, confirm outbound access works:
 
