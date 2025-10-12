@@ -1,24 +1,28 @@
 <!--
-Rationale:
-- Ensures all test resources are removed to prevent costs.
+Purpose:
+- This runbook ensures complete teardown of all AWS resources
+  deployed in the Secure VPC Foundation (Phase 1) project.
+- Goal: avoid ongoing AWS costs and confirm a clean environment reset.
 -->
+
 # Runbook: Teardown & Cost Control
 
 ## Purpose
-Remove all resources after testing to avoid costs.
+Safely destroy all infrastructure created by Terraform for this project  
+to prevent unnecessary AWS charges and to maintain a clean state for future runs.
 
-## Procedure
+---
+
+## Prerequisites
+<!-- Confirm these before starting teardown -->
+- You are in the correct Terraform working directory.
+- All critical logs or data have been backed up (especially Flow Logs).
+- AWS credentials are valid and point to the correct account.
+- You’ve reviewed the plan to ensure no shared resources are affected.
+
+---
+
+## Step 1 — Review the Destroy Plan
+Before executing the teardown, always preview the destruction:
 ```bash
-cd iac/terraform
-terraform destroy -auto-approve
-```
-<!--
-Post-Checks
-No running EC2 instances.
-Flow Logs bucket deleted (force_destroy=true).
-VPC and subnets no longer listed in the AWS console.
-
-Notes: 
-Run terraform plan -destroy before actual teardown if you need to review.
-Backup logs before destruction if required.
--->
+terraform plan -destroy
