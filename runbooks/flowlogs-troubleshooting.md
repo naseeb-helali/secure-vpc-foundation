@@ -1,5 +1,3 @@
-
-```markdown
 <!--
 Rationale:
 - Used to confirm Flow Logs delivery and analyze dropped/allowed traffic.
