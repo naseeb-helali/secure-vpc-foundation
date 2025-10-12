@@ -62,14 +62,13 @@ Ensure private EC2 instances have no public IPs.
 Regularly rotate SSH keys and audit connection logs.
 
 # Troubleshooting
-```
+
 Issue	Possible Cause	Resolution
 
 Permission denied (publickey)	Wrong key or missing permissions	chmod 400 ~/.ssh/<KEY>.pem and re-try
 Timeout on private EC2 SSH	Security group rule missing	Allow inbound SSH from bastion SG
 Bastion unreachable	Wrong public IP or SG rule	Check Terraform outputs and AWS console
 “Agent refused operation”	SSH agent not running locally	Start SSH agent: eval "$(ssh-agent -s)" and add key
-```
 
 
 ---
