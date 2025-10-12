@@ -16,8 +16,7 @@ Confirm delivery of VPC Flow Logs to S3 and diagnose missing records.
 aws s3 cp s3://<FLOWLOGS_BUCKET>/<PATH>/<FILE>.gz .
 zcat <FILE>.gz | head -20
 
-<!--
-Key fields:
+<!--Key fields:
 srcaddr, dstaddr, srcport, dstport, protocol
 action (ACCEPT|REJECT)
 log-status (OK|NODATA|SKIPDATA)
@@ -30,5 +29,4 @@ Empty/old logs → ensure active traffic; wait a few minutes for delivery.
 
 Notes
 Keep traffic type ALL for validation.
-Apply lifecycle policies to manage S3 cost and retention.
--->
+Apply lifecycle policies to manage S3 cost and retention.-->
