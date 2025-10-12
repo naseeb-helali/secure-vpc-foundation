@@ -1,4 +1,3 @@
-```markdown
 <!--
 Rationale:
 - Ensures private instances can reach the internet via NAT instance.
