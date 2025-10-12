@@ -17,12 +17,12 @@ aws s3 cp s3://<FLOWLOGS_BUCKET>/<PATH>/<FILE>.gz .
 zcat <FILE>.gz | head -20
 
 <!--
-## Key fields:
+Key fields:
 srcaddr, dstaddr, srcport, dstport, protocol
 action (ACCEPT|REJECT)
 log-status (OK|NODATA|SKIPDATA)
-## Common Issues
-<!-- Frequent problems observed in test environments -->No objects → check IAM policy for s3:PutObject; verify correct VPC target.
+Common Issues
+Frequent problems observed in test environments -->No objects → check IAM policy for s3:PutObject; verify correct VPC target.
 
 Only ACCEPT or only REJECT → review SG/NACL rules; generate more traffic.
 
