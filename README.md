@@ -25,14 +25,14 @@ See `diagrams/architecture.mmd`.
 - AWS CLI configured (for optional tests).
 
 ## Usage
-bash
+```bash
 cd iac/terraform
 terraform init
 terraform validate
 terraform plan
-terraform apply
-terraform destroy
-
+# terraform apply
+# terraform destroy
+```
 ## Verification
 
 SSH to bastion from admin CIDR.
@@ -56,7 +56,7 @@ Gateway Endpoint improves security and reduces NAT traffic.
 Flow Logs stored in S3 for offline analysis.
 
 ## Repository Structure
-
+```
 secure-vpc-foundation/
 ├─ diagrams/
 ├─ iac/terraform/
@@ -64,7 +64,7 @@ secure-vpc-foundation/
 ├─ tests/
 ├─ README.md
 └─ LICENSE
-
+```
 ## Limitations
 
 Single-AZ example (no HA for bastion or NAT).
