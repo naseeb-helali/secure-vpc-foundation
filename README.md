@@ -33,7 +33,7 @@ terraform plan
 # terraform apply
 # terraform destroy
 ```
-Verification
+## Verification
 
 SSH to bastion from admin CIDR.
 
@@ -48,16 +48,14 @@ Confirm Flow Logs appear in S3.
 
 Design Notes
 
-<!-- Key design decisions explained -->NAT instance reduces cost vs NAT Gateway.
-
+NAT instance reduces cost vs NAT Gateway.
 Bastion ingress restricted to admin IP only.
 
 Gateway Endpoint improves security and reduces NAT traffic.
 
 Flow Logs stored in S3 for offline analysis.
 
-
-Repository Structure
+## Repository Structure
 
 secure-vpc-foundation/
 ├─ diagrams/
@@ -67,14 +65,14 @@ secure-vpc-foundation/
 ├─ README.md
 └─ LICENSE
 
-Limitations
+## Limitations
 
 Single-AZ example (no HA for bastion or NAT).
 
 Simplified IAM and network policies for demonstration.
 
 
-Next Steps (Phase 2)
+## Next Steps (Phase 2)
 
 Replace NAT instance with managed NAT Gateway (per AZ).
 
