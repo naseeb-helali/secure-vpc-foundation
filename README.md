@@ -25,14 +25,14 @@ See `diagrams/architecture.mmd`.
 - AWS CLI configured (for optional tests).
 
 ## Usage
-```bash
+bash
 cd iac/terraform
 terraform init
 terraform validate
 terraform plan
-# terraform apply
-# terraform destroy
-```
+terraform apply
+terraform destroy
+
 ## Verification
 
 SSH to bastion from admin CIDR.
