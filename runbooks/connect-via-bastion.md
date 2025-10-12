@@ -28,6 +28,7 @@ From your local terminal:
 ```bash
 ssh -i ~/.ssh/<KEY>.pem ec2-user@<BASTION_PUBLIC_IP>
 ```
+<!--
 > Replace <KEY>.pem with your SSH key filename and <BASTION_PUBLIC_IP> with the public IP from Terraform output.
 
 
@@ -90,3 +91,4 @@ Notes
 This is a minimal, Free-Tier-friendly configuration using a bastion host instead of Session Manager.
 In Phase 2 (DevOps), consider migrating to AWS SSM Session Manager for fully keyless, auditable access.
 ---
+-->
