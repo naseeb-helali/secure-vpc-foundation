@@ -43,7 +43,6 @@ graph TD
   APP -->|Outbound| NAT --> IGW
   APP -->|Private Access| S3EP --> S3
   FLOW --> S3
-{init: {'theme': 'default', 'zoom': false}}
 ```
 ## Key Design Features
 
