@@ -3,24 +3,30 @@
 %%------------------------------------------------------------
 %% This diagram illustrates:
 %% - Public and private subnets within a single VPC
-%% - Bastion Host and NAT Instance (public subnet)
+%% - Bastion Host and NAT Instance (public subnet)  
 %% - Private EC2 (private subnet)
 %% - S3 Gateway Endpoint and Flow Logs to S3
 %%------------------------------------------------------------
 
 graph TD
 
-  %% VPC boundary
+  %% ====================
+  %% VPC Boundary
+  %% ====================
   subgraph VPC["AWS VPC (10.0.0.0/16)"]
     
-    %% Public Subnet
+    %% ====================
+    %% Public Subnet Components
+    %% ====================
     subgraph PublicSubnet["Public Subnet (10.0.1.0/24)"]
       BASTION["Bastion Host\n(t3.micro, Public IP)"]
       NAT["NAT Instance\n(t3.micro, SourceDestCheck=false)"]
       IGW["Internet Gateway"]
     end
 
-    %% Private Subnet
+    %% ====================
+    %% Private Subnet Components  
+    %% ====================
     subgraph PrivateSubnet["Private Subnet (10.0.2.0/24)"]
       APP["Private EC2 Instance\n(t3.micro, No Public IP)"]
       S3EP["S3 Gateway Endpoint"]
@@ -28,23 +34,32 @@ graph TD
 
   end
 
-  %% External and Logging Components
+  %% ====================
+  %% External Services
+  %% ====================
   S3["S3 Bucket\n(Flow Logs + Data Access)"]
   FLOWLOGS["VPC Flow Logs\n(to S3 via IAM Role)"]
 
-  %% Connectivity
+  %% ====================
+  %% Network Connections
+  %% ====================
   BASTION -->|SSH| APP
   APP -->|Outbound HTTP/S| NAT
   NAT -->|Outbound| IGW
   APP -->|Private Access| S3EP --> S3
   FLOWLOGS --> S3
 
-  %% Labels
+  %% ====================
+  %% Styling Definitions
+  %% ====================
   classDef compute fill:#E3F2FD,stroke:#1565C0,stroke-width:1px,color:#0D47A1;
   classDef storage fill:#E8F5E9,stroke:#2E7D32,stroke-width:1px,color:#1B5E20;
   classDef network fill:#FFF8E1,stroke:#F9A825,stroke-width:1px,color:#F57F17;
   classDef service fill:#F3E5F5,stroke:#6A1B9A,stroke-width:1px,color:#4A148C;
 
+  %% ====================
+  %% Apply Styles
+  %% ====================
   class BASTION,NAT,APP compute;
   class S3,S3EP storage;
   class IGW,VPC,PublicSubnet,PrivateSubnet network;
