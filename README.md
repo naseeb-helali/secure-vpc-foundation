@@ -59,7 +59,7 @@ IAM Roles + SGs → Principle of least privilege and CIDR-restricted SSH.
 ---
 
 ## Repository Structure
-bash
+```mermaid
 secure-vpc-foundation/
 ├─ iac/terraform/
 │  ├─ providers.tf
