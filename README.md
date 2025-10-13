@@ -8,14 +8,14 @@ Purpose:
 
 # Secure VPC Foundation — Phase 1
 
-A minimal, production-oriented **AWS VPC baseline** built entirely with **Terraform**.  
-It demonstrates secure networking, controlled access, and visibility — while staying within the **AWS Free Tier**.
+A minimal, production-oriented AWS VPC baseline built entirely with Terraform.  
+It demonstrates secure networking, controlled access, and visibility — while staying within the AWS Free Tier.
 
 ---
 
 ## Objectives
-- Build a **secure and cost-efficient** VPC environment from scratch.  
-- Prove **hands-on cloud architecture readiness** for production workloads.  
+- Build a secure and cost-efficient VPC environment from scratch.  
+- Prove hands-on cloud architecture readiness for production workloads.  
 - Establish reusable Terraform modules and runbooks for future DevOps automation.  
 
 ---
@@ -59,7 +59,7 @@ IAM Roles + SGs → Principle of least privilege and CIDR-restricted SSH.
 ---
 
 ## Repository Structure
-
+bash
 secure-vpc-foundation/
 ├─ iac/terraform/
 │  ├─ providers.tf
