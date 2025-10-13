@@ -58,8 +58,8 @@ IAM Roles + SGs → Principle of least privilege and CIDR-restricted SSH.
 
 ---
 
-🛠️ Repository Structure
-
+## Repository Structure
+```bash
 secure-vpc-foundation/
 ├─ iac/terraform/
 │  ├─ providers.tf
@@ -88,7 +88,7 @@ secure-vpc-foundation/
 │
 ├─ LICENSE
 └─ README.md
-
+```
 
 ---
 
