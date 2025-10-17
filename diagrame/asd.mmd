@@ -10,14 +10,14 @@ direction TB
   subgraph Public_A["Public Subnet"]
   direction LR
     IGW_A[IGW]
-    Bastion_A[Bastion<br/>(restricted IP)]
-    NATI[NAT Instance<br/>(S/D check disabled)]
+    Bastion_A["Bastion<br/>(restricted IP)"]
+    NATI["NAT Instance<br/>(S/D check disabled)"]
   end
 
   %% Private subnet (row 2)
   subgraph Private_A["Private Subnet"]
   direction LR
-    App_A[App EC2<br/>(no public IP)]
+    App_A["App EC2<br/>(no public IP)"]
     S3_EP[(S3 Gateway Endpoint)]
   end
 
@@ -31,9 +31,9 @@ end
 
 %% Controls & Observability (row 4)
 FlowLogs_A[Flow Logs → CloudWatch]
-SG_App_A[SG-App: SSH only<br/>from SG-Bastion]
+SG_App_A["SG-App: SSH only<br/>from SG-Bastion"]
 NACL_A[NACLs: least-privilege]
-Cost_A[NAT Instance (lab):<br/>no NAT GW hourly charge]
+Cost_A["NAT Instance (lab):<br/>no NAT GW hourly charge"]
 
 %% Wiring
 Internet --> IGW_A
