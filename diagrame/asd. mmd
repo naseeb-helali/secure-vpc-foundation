@@ -1,0 +1,49 @@
+%%{init: { "flowchart": { "htmlLabels": true, "rankSpacing": 80, "nodeSpacing": 80 } }}%%
+flowchart TB
+
+Internet((Internet))
+
+subgraph VPC_A["VPC"]
+direction TB
+
+  %% Public subnet (row 1)
+  subgraph Public_A["Public Subnet"]
+  direction LR
+    IGW_A[IGW]
+    Bastion_A[Bastion<br/>(restricted IP)]
+    NATI[NAT Instance<br/>(S/D check disabled)]
+  end
+
+  %% Private subnet (row 2)
+  subgraph Private_A["Private Subnet"]
+  direction LR
+    App_A[App EC2<br/>(no public IP)]
+    S3_EP[(S3 Gateway Endpoint)]
+  end
+
+  %% Route tables (row 3)
+  subgraph RT_A["Route Tables"]
+  direction LR
+    RTpub_A[Public RT<br/>0.0.0.0/0 → IGW]
+    RTprv_A[Private RT<br/>0.0.0.0/0 → NAT Instance<br/>pl-aws-s3 → S3 Endpoint]
+  end
+end
+
+%% Controls & Observability (row 4)
+FlowLogs_A[Flow Logs → CloudWatch]
+SG_App_A[SG-App: SSH only<br/>from SG-Bastion]
+NACL_A[NACLs: least-privilege]
+Cost_A[NAT Instance (lab):<br/>no NAT GW hourly charge]
+
+%% Wiring
+Internet --> IGW_A
+IGW_A --> Bastion_A
+IGW_A --> NATI
+App_A --> NATI --> Internet
+App_A --> S3_EP
+RTpub_A --- Public_A
+RTprv_A --- Private_A
+FlowLogs_A --- VPC_A
+SG_App_A --- App_A
+NACL_A --- Private_A
+Cost_A --- NATI
